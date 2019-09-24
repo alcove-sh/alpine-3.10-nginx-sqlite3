@@ -4,9 +4,18 @@
 # Author: urain39@qq.com
 #
 
+HERE=${0%/*}
+
 RUN_USER="nextcloud"
 OS_NAME="alpine-nextcloud"
 SERVER_NAME="0.0.0.0"
+INSTALL_QBITTORRENT="no"
+
+
+# Load custom config
+if [ -f ${HERE}/config.conf ]; then
+  . ${HERE}/config.conf
+fi
 
 
 # Install base system
@@ -21,6 +30,7 @@ umask 0022 # Ensure permission is we want
 
 # Switch to mirror sources
 sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+
 # Install NextCloud
 apk --update --no-cache add \
     nextcloud \
@@ -115,14 +125,14 @@ CN
 
 EOI2
 
+# Re-set nginx user and group
+sed -Ei -e 's/^( *user *).+(;)$/\1nextcloud www-data\2/g' \
+        /etc/nginx/nginx.conf
+
 # Re-set php-fpm user and group
 sed -Ei -e 's/^( *user *= *).+$/\1${RUN_USER}/g' \
         -e 's/^( *group *= *).+$/\1www-data/g' \
         /etc/php7/php-fpm.d/www.conf
-
-# Re-set nginx user and group
-sed -Ei -e 's/^( *user *).+(;)$/\1nextcloud www-data\2/g' \
-        /etc/nginx/nginx.conf
 
 group_list() {
 cat <<EOF
@@ -161,33 +171,8 @@ patch_user() {
 patch_group && patch_user "${RUN_USER}"
 
 # Register alcove hooks
-cat > /alcove-hooks/70-nextcloud <<EOH
-#! /bin/sh
-
-# Filename: /alcove-hooks/70-nextcloud
-
-start() {
-  service php-fpm7 restart
-  service nginx restart
-}
-
-stop() {
-  service php-fpm7 stop
-  service nginx stop
-}
-
-case "\\\${1}" in
-  start)
-    start
-    ;;
-  stop)
-    stop
-    ;;
-esac
-EOH
-
-# Mark hooks executable
-chmod 755 /alcove-hooks/70-nextcloud
+ln -s /etc/init.d/php-fpm7 /alcove-hooks/60-php-fpm7
+ln -s /etc/init.d/nginx /alcove-hooks/61-nginx
 
 # Trigger OpenRC
 openrc
@@ -202,4 +187,30 @@ EOS
 
 # Mark script executable
 chmod 755 /etc/periodic/15min/70-nextcloud-scan
+
+
+# Add qBittorrent-nox (Optional)
+install_qbittorrent_nox() {
+    # Add testing repository
+    if ! grep -q 'edge/testing' /etc/apk/repositories; then
+      sed -Ei -e 's/^(.+\/)v[0-9]+\.[0-9]+\/main/\0\n\1edge\/testing/' \
+              /etc/apk/repositories
+    fi
+
+    # Install qBittorrent-nox
+    apk --update add --no-cache qbittorrent-nox
+
+    # Fix network for qBittorrent-nox
+    patch_user "qbittorrent"
+
+
+    # Register alcove hooks
+    ln -s /etc/init.d/qbittorrent-nox /alcove-hooks/66-qbittorrent-nox
+}
+
+case "${INSTALL_QBITTORRENT}" in
+  y*|Y*)
+    install_qbittorrent_nox
+    ;;
+esac
 EOI
