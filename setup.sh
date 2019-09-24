@@ -116,7 +116,7 @@ CN
 EOI2
 
 # Re-set php-fpm user and group
-sed -Ei -e 's/^( *user *= *).+$/\1nginx/g' \
+sed -Ei -e 's/^( *user *= *).+$/\1${RUN_USER}/g' \
         -e 's/^( *group *= *).+$/\1www-data/g' \
         /etc/php7/php-fpm.d/www.conf
 
