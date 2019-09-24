@@ -4,6 +4,7 @@
 # Author: urain39@qq.com
 #
 
+RUN_USER="nextcloud"
 OS_NAME="alpine-nextcloud"
 SERVER_NAME="0.0.0.0"
 
@@ -23,7 +24,6 @@ sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/reposi
 # Install NextCloud
 apk --update --no-cache add \
     nextcloud \
-    nextcloud-default-apps \
     nextcloud-notifications \
     nextcloud-pdfviewer \
     nextcloud-sqlite \
@@ -158,7 +158,7 @@ patch_user() {
 }
 
 # Fix network for Nginx
-patch_group && patch_user "nginx"
+patch_group && patch_user "${RUN_USER}"
 
 # Register alcove hooks
 cat > /alcove-hooks/70-nextcloud <<EOH
