@@ -6,10 +6,12 @@
 
 HERE=${0%/*}
 
-RUN_USER="nextcloud"
+NEXTCLOUD_USER="nextcloud"
 OS_NAME="alpine-nextcloud"
 SERVER_NAME="0.0.0.0"
 INSTALL_QBITTORRENT="no"
+UPLOAD_LIMIT="8G"
+MEMORY_LIMIT="512M"
 
 
 # Load custom config
@@ -114,7 +116,7 @@ openssl req -x509 -nodes \
     -days 365 -newkey rsa:4096 -keyout \
     /etc/ssl/private/nginx-selfsigned.key \
     -out /etc/ssl/certs/nginx-selfsigned.crt <<EOI2
-CN
+
 
 
 
@@ -126,13 +128,22 @@ CN
 EOI2
 
 # Re-set nginx user and group
-sed -Ei -e 's/^( *user *).+(;)$/\1nextcloud www-data\2/g' \
+sed -Ei -e 's/^([ \t]*user[ \t]+).+(;.*)$/\1nextcloud www-data\2/g' \
         /etc/nginx/nginx.conf
 
 # Re-set php-fpm user and group
-sed -Ei -e 's/^( *user *= *).+$/\1${RUN_USER}/g' \
-        -e 's/^( *group *= *).+$/\1www-data/g' \
+sed -Ei -e 's/^([ \t]*user[ \t]*=[ \t]*).+$/\1${NEXTCLOUD_USER}/g' \
+        -e 's/^([ \t]*group[ \t]*=[ \t]*).+$/\1www-data/g' \
         /etc/php7/php-fpm.d/www.conf
+
+# Set max upload size
+sed -Ei -e 's/^([ \t]*client_max_body_size[ \t]+).+(;.*)$/\1${UPLOAD_LIMIT}\2/g' \
+        /etc/nginx/nginx.conf
+
+# Set max memory size
+cat > /etc/php7/conf.d/99-override.ini <<EOC2
+memory_limit = ${MEMORY_LIMIT}
+EOC2
 
 group_list() {
 cat <<EOF
@@ -159,23 +170,22 @@ patch_group() {
 }
 
 patch_user() {
-    local user="\$1"
-    [ x\$user = "x" ] && return
+    local user="\${1}"
+    [ x\${user} = "x" ] && return
     group_list | while read group; do
-        group=\$(echo \$group | cut -d':' -f1)
-        gpasswd -a "\$user" \$group || return
+        group=\$(echo \${group} | cut -d':' -f1)
+        gpasswd -a "\${user}" \${group} || return
     done
 }
 
 # Fix network for Nginx
-patch_group && patch_user "${RUN_USER}"
+patch_group && patch_user "${NEXTCLOUD_USER}"
+
 
 # Register alcove hooks
 ln -s /etc/init.d/php-fpm7 /alcove-hooks/60-php-fpm7
 ln -s /etc/init.d/nginx /alcove-hooks/61-nginx
 
-# Trigger OpenRC
-openrc
 
 # Add cron script for Downloaders
 cat > /etc/periodic/15min/70-nextcloud-scan <<EOS
@@ -189,11 +199,15 @@ EOS
 chmod 755 /etc/periodic/15min/70-nextcloud-scan
 
 
+# Trigger OpenRC
+openrc
+
+
 # Add qBittorrent-nox (Optional)
 install_qbittorrent_nox() {
     # Add testing repository
     if ! grep -q 'edge/testing' /etc/apk/repositories; then
-      sed -Ei -e 's/^(.+\/)v[0-9]+\.[0-9]+\/main/\0\n\1edge\/testing/' \
+      sed -Ei -e 's/^(.+\/)v[0-9]+\.[0-9]+\/main.*$/\0\n\1edge\/testing/' \
               /etc/apk/repositories
     fi
 
