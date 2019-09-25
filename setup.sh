@@ -145,6 +145,10 @@ cat > /etc/php7/conf.d/99-override.ini <<EOC2
 memory_limit = ${MEMORY_LIMIT}
 EOC2
 
+# Fix cannot upload
+chown ${NEXTCLOUD_USER}:www-data /var/tmp/nginx
+#chown ${NEXTCLOUD_USER}:www-data -R /var/tmp/nginx
+
 group_list() {
 cat <<EOF
 net_bt_admin:x:3001
