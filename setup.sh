@@ -231,4 +231,8 @@ case "${INSTALL_QBITTORRENT}" in
         install_qbittorrent_nox
         ;;
 esac
+
+
+# No login
+sed -i 's/\([ \t]*\)su - root/\1echo "Press Ctrl+C to exit." \&\& crond -f/g' /init.sh
 EOI
