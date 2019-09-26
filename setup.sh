@@ -16,14 +16,14 @@ MEMORY_LIMIT="512M"
 
 # Load custom config
 if [ -f ${HERE}/config.conf ]; then
-  . ${HERE}/config.conf
+    . ${HERE}/config.conf
 fi
 
 
 # Install base system
 mkdir ${OS_NAME} && cd ${OS_NAME}
 wget -O - http://mirrors.ustc.edu.cn/alpine/v3.10/releases/aarch64/alpine-minirootfs-3.10.0-aarch64.tar.gz | tar xzvpf -
-cd ../ && alcove init ${OS_NAME} && rm -f ${OS_NAME}/alcove.binds  # Old version compatible
+cd ../ && alcove init ${OS_NAME} && rm -f ${OS_NAME}/alcove.binds # Old version compatible
 
 
 # Start install NextCloud
@@ -227,8 +227,8 @@ install_qbittorrent_nox() {
 }
 
 case "${INSTALL_QBITTORRENT}" in
-  y*|Y*)
-    install_qbittorrent_nox
-    ;;
+    y*|Y*)
+        install_qbittorrent_nox
+        ;;
 esac
 EOI
