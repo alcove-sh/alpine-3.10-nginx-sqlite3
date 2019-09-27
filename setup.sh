@@ -128,7 +128,7 @@ openssl req -x509 -nodes \
 EOI2
 
 # Re-set nginx user and group
-sed -Ei -e 's/^([ \t]*user[ \t]+).+(;.*)$/\1nextcloud www-data\2/g' \
+sed -Ei -e 's/^([ \t]*user[ \t]+).+(;.*)$/\1${NEXTCLOUD_USER} www-data\2/g' \
         /etc/nginx/nginx.conf
 
 # Re-set php-fpm user and group
@@ -147,7 +147,7 @@ EOC2
 
 # Fix cannot upload
 chown ${NEXTCLOUD_USER}:www-data /var/tmp/nginx
-#chown ${NEXTCLOUD_USER}:www-data -R /var/tmp/nginx
+chown ${NEXTCLOUD_USER}:www-data /var/lib/nginx
 
 group_list() {
 cat <<EOF
@@ -234,5 +234,5 @@ esac
 
 
 # No login
-sed -i 's/\([ \t]*\)su - root/\1echo "Press Ctrl+C to exit." \&\& crond -f/g' /init.sh
+sed -i 's/^\([ \t]*\)su - root/\1echo "Press Ctrl+C to exit." \&\& crond -f/g' /init.sh
 EOI
