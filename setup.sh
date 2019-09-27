@@ -22,7 +22,7 @@ fi
 
 # Install base system
 mkdir ${OS_NAME} && cd ${OS_NAME}
-wget -O - http://mirrors.ustc.edu.cn/alpine/v3.10/releases/aarch64/alpine-minirootfs-3.10.0-aarch64.tar.gz | tar xzvpf -
+wget -O - http://mirrors.aliyun.com/alpine/v3.10/releases/aarch64/alpine-minirootfs-3.10.0-aarch64.tar.gz | tar xzvpf -
 cd ../ && alcove init ${OS_NAME} && rm -f ${OS_NAME}/alcove.binds # Old version compatible
 
 
@@ -31,7 +31,7 @@ alcove boot ${OS_NAME} <<EOI
 umask 0022 # Ensure permission is we want
 
 # Switch to mirror sources
-sed -i 's/dl-cdn.alpinelinux.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apk/repositories
+sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 # Install NextCloud
 apk --update --no-cache add \
