@@ -35,6 +35,8 @@ sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 # Install NextCloud
 apk --update --no-cache add \
+    aria2 \
+    aria2-daemon \
     nextcloud \
     nextcloud-files_external \
     nextcloud-notifications \
@@ -59,6 +61,22 @@ cat > /etc/init.d/networking <<EOP
 # Do nothing, always exit 0
 exit 0
 EOP
+
+
+# Fix crash for Aria2-daemon
+su - "${ARIA2_USER}" -s /bin/sh -c "
+    touch ~/aria2.session
+"
+
+# Fix network for Aria2
+patch_user "${ARIA2_USER}"
+
+# Fix access for NextCloud
+addgroup "${NEXTCLOUD_USER}" "${ARIA2_USER}"
+
+# Register alcove hooks
+ln -s /etc/init.d/aria2 /alcove-hooks/80-aria2
+
 
 # Disable default.conf
 mv /etc/nginx/conf.d/default.conf \
@@ -206,24 +224,6 @@ chmod 755 /etc/periodic/15min/70-nextcloud-scan
 
 # Trigger OpenRC
 openrc
-
-
-# Install Aria2
-apk --update --no-cache add \
-    aria2 \
-    aria2-daemon
-
-# Fix crash for Aria2-daemon
-su - "${ARIA2_USER}" -s /bin/sh -c "
-    touch ~/aria2.session
-"
-
-# Fix network for Aria2
-patch_user "${ARIA2_USER}"
-
-
-# Register alcove hooks
-ln -s /etc/init.d/aria2 /alcove-hooks/80-aria2
 
 
 # No login
