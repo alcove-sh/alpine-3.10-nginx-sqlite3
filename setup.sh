@@ -11,6 +11,7 @@ OS_NAME="alpine-nextcloud"
 SERVER_NAME="0.0.0.0"
 UPLOAD_LIMIT="8G"
 MEMORY_LIMIT="512M"
+ARIA2_USER="aria2" # Do NOT modify!
 
 
 # Load custom config
@@ -35,6 +36,7 @@ sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 # Install NextCloud
 apk --update --no-cache add \
     nextcloud \
+    nextcloud-files_external \
     nextcloud-notifications \
     nextcloud-pdfviewer \
     nextcloud-sqlite \
@@ -212,12 +214,12 @@ apk --update --no-cache add \
     aria2-daemon
 
 # Fix crash Aria2-daemon
-su - "aria2" -s /bin/sh -c "
+su - "${ARIA2_USER}" -s /bin/sh -c "
     touch ~/aria2.session
 "
 
 # Fix network for Aria2
-patch_user "aria2"
+patch_user "${ARIA2_USER}"
 
 
 # Register alcove hooks
