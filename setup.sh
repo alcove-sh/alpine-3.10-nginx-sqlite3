@@ -9,9 +9,9 @@ HERE=${0%/*}
 NEXTCLOUD_USER="nextcloud"
 OS_NAME="alpine-nextcloud"
 SERVER_NAME="0.0.0.0"
-INSTALL_QBITTORRENT="no"
 UPLOAD_LIMIT="8G"
 MEMORY_LIMIT="512M"
+ARIA2_USER="aria2" # Do NOT modify!
 
 
 # Load custom config
@@ -36,6 +36,7 @@ sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 # Install NextCloud
 apk --update --no-cache add \
     nextcloud \
+    nextcloud-files_external \
     nextcloud-notifications \
     nextcloud-pdfviewer \
     nextcloud-sqlite \
@@ -207,30 +208,22 @@ chmod 755 /etc/periodic/15min/70-nextcloud-scan
 openrc
 
 
-# Add qBittorrent-nox (Optional)
-install_qbittorrent_nox() {
-    # Add testing repository
-    if ! grep -q 'edge/testing' /etc/apk/repositories; then
-      sed -Ei -e 's/^(.+\/)v[0-9]+\.[0-9]+\/main.*$/\0\n\1edge\/testing/' \
-              /etc/apk/repositories
-    fi
+# Install Aria2
+apk --update --no-cache add \
+    aria2 \
+    aria2-daemon
 
-    # Install qBittorrent-nox
-    apk --update add --no-cache qbittorrent-nox
+# Fix crash Aria2-daemon
+su - "${ARIA2_USER}" -s /bin/sh -c "
+    touch ~/aria2.session
+"
 
-    # Fix network for qBittorrent-nox
-    patch_user "qbittorrent"
+# Fix network for Aria2
+patch_user "${ARIA2_USER}"
 
 
-    # Register alcove hooks
-    ln -s /etc/init.d/qbittorrent-nox /alcove-hooks/66-qbittorrent-nox
-}
-
-case "${INSTALL_QBITTORRENT}" in
-    y*|Y*)
-        install_qbittorrent_nox
-        ;;
-esac
+# Register alcove hooks
+ln -s /etc/init.d/aria2 /alcove-hooks/80-aria2
 
 
 # No login
