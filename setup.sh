@@ -213,7 +213,7 @@ apk --update --no-cache add \
     aria2 \
     aria2-daemon
 
-# Fix crash Aria2-daemon
+# Fix crash for Aria2-daemon
 su - "${ARIA2_USER}" -s /bin/sh -c "
     touch ~/aria2.session
 "
