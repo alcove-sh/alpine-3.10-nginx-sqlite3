@@ -84,7 +84,7 @@ bt-enable-lpd=true
 enable-peer-exchange=true
 
 # Set UDP listening port used by DHT(IPv4, IPv6) and UDP tracker.
-dht-listen-port=6881-6999,8999,51413
+dht-listen-port=6881,8999,9532,51413
 
 # Set host and port as an entry point to IPv4 DHT network.
 # You can get this list at 'https://github.com/qbittorrent/qBittorrent/search?l=C%2B%2B&q=router'
@@ -100,7 +100,7 @@ dht-entry-point=dht.transmissionbt.com:6881
 #dht-entry-point6=<HOST>:<PORT>
 
 # TCP port number(s) for BitTorrent downloads.
-listen-port=6881-6999,8999,51413
+listen-port=6881,8999,9532,51413
 
 # Requires BitTorrent message payload encryption with arc4.
 bt-force-encryption=true
