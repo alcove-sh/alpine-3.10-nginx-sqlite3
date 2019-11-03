@@ -10,19 +10,21 @@ udp://9.rarbg.me:2710/announce
 
 udp://exodus.desync.com:6969/announce
 
+udp://tracker.internetwarriors.net:1337/announce
+
 udp://tracker.openbittorrent.com:80/announce
 
-udp://tracker.tiny-vps.com:6969/announce
-
-udp://retracker.lanta-net.ru:2710/announce
-
-udp://open.stealth.si:80/announce
-
 udp://tracker.torrent.eu.org:451/announce
+
+udp://tracker.tiny-vps.com:6969/announce
 
 udp://tracker.cyberia.is:6969/announce
 
 udp://torrentclub.tech:6969/announce
+
+udp://retracker.lanta-net.ru:2710/announce
+
+udp://open.stealth.si:80/announce
 
 udp://denis.stalker.upeer.me:6969/announce
 
@@ -34,9 +36,7 @@ udp://ipv4.tracker.harry.lu:80/announce
 
 udp://tracker3.itzmx.com:6961/announce
 
-udp://valakas.rollo.dnsabr.com:2710/announce
-
-udp://opentor.org:2710/announce
+udp://explodie.org:6969/announce
 
 udp://62.138.0.158:6969/announce
 
@@ -44,25 +44,27 @@ udp://188.241.58.209:6969/announce
 
 udp://93.158.213.92:1337/announce
 
-udp://151.80.120.114:2710/announce
-
 udp://151.80.120.113:2710/announce
+
+udp://151.80.120.115:2710/announce
 
 udp://208.83.20.20:6969/announce
 
+udp://185.148.147.17:1337/announce
+
 udp://185.19.107.254:80/announce
 
-udp://5.206.19.247:6969/announce
-
-udp://37.235.174.46:2710/announce
-
-udp://185.181.60.67:80/announce
-
 udp://89.234.156.205:451/announce
+
+udp://5.206.19.247:6969/announce
 
 udp://159.100.245.181:6969/announce
 
 udp://45.56.74.11:6969/announce
+
+udp://37.235.174.46:2710/announce
+
+udp://185.181.60.67:80/announce
 
 udp://54.37.235.149:6969/announce
 
@@ -74,7 +76,12 @@ udp://51.15.40.114:80/announce
 
 udp://176.113.71.19:6961/announce
 
-udp://46.148.18.250:2710/announce
+udp://184.105.151.164:6969/announce
 
-udp://46.148.18.254:2710/announce
-
+# These trackers will be added to all generated torrents,
+# to ensure the torrents' continued life in case one or two die.
+# One tracker per line, lines starting with # are disregarded
+udp://open.stealth.si:80/announce
+udp://tracker.opentrackr.org:1337/announce
+udp://tracker.coppersurfer.tk:6969/announce
+udp://exodus.desync.com:6969/announce
