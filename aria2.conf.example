@@ -107,7 +107,7 @@ bt-force-encryption=true
 bt-min-crypto-level=arc4
 bt-require-crypto=true
 
-# Save metadata is useful for download magnet URIs.
+# Save MetaData is useful for download Magnet URIs.
 bt-save-metadata=true
 bt-load-saved-metadata=true
 
