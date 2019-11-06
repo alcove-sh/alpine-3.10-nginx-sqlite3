@@ -1,6 +1,6 @@
 # Created by: urain39@cyfan.cf
 #
-# Config Note: . If a private flag is set in a torrent, aria2 doesn't
+# Config Note: If a private flag is set in a torrent, aria2 doesn't
 # use DHT & LPD & PEX for that download even if true is given.
 #
 # Run aria2c --help=#all to see all the available options.
