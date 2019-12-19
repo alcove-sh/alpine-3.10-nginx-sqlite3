@@ -5,7 +5,7 @@ TRACKER_LIST_BEST_IP="https://raw.githubusercontent.com/ngosang/trackerslist/mas
 TRACKER_LIST_NYAA="https://raw.githubusercontent.com/nyaadevs/nyaa/master/trackers.txt"
 
 
-wget -O - "${TRACKER_LIST_BEST}" > trackers.txt
-wget -O - "${TRACKER_LIST_BEST_IP}" >> trackers.txt
-wget -O - "${TRACKER_LIST_NYAA}" >> trackers.txt
+curl -sL "${TRACKER_LIST_BEST}" > trackers.txt
+curl -sL "${TRACKER_LIST_BEST_IP}" >> trackers.txt
+curl -sL "${TRACKER_LIST_NYAA}" >> trackers.txt
 
