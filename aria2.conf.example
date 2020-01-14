@@ -61,7 +61,7 @@ rpc-secret=arcticfox
 ## Agent
 
 # Peer Agent for BitTorrent downloads.
-peer-agent=Transmission 3.00+
+peer-agent=Transmission/3.00+
 peer-id-prefix=-TR300Z-
 
 # User Agenr for HTTP/FTP downloads.
