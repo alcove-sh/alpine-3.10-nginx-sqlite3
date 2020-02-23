@@ -43,7 +43,7 @@ file-allocation=falloc
 enable-mmap=true
 
 # Disk cache. If SIZE is 0, the disk cache is disabled.
-disk-cache=128M
+disk-cache=32M
 
 
 ## RPC
@@ -89,12 +89,12 @@ dht-listen-port=6881,8999,9532,51413
 # Set host and port as an entry point to IPv4 DHT network.
 # You can get this list at 'https://github.com/qbittorrent/qBittorrent/search?l=C%2B%2B&q=router'
 #dht-entry-point=<HOST>:<PORT>
-#dht-entry-point=dht.libtorrent.org:25401
+dht-entry-point=dht.libtorrent.org:25401
 #dht-entry-point=router.bittorrent.com:6881
 #dht-entry-point=router.utorrent.com:6881
 #dht-entry-point=router.bitcomet.net:554
 #dht-entry-point=dht.aelitis.com:6881
-dht-entry-point=dht.transmissionbt.com:6881
+#dht-entry-point=dht.transmissionbt.com:6881
 
 # Set host and port as an entry point to IPv6 DHT network.
 #dht-entry-point6=<HOST>:<PORT>
