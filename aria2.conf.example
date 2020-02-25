@@ -61,8 +61,11 @@ rpc-secret=arcticfox
 ## Agent
 
 # Peer Agent for BitTorrent downloads.
-peer-agent=Transmission/3.00+
-peer-id-prefix=-TR300Z-
+peer-agent=qBittorrent/4.2.1
+peer-id-prefix=-qB4210-
+
+# Note: PT needs to keep user-agent and peer-agent parameters consistent!
+#user-agent=qBittorrent/4.2.1
 
 # User Agenr for HTTP/FTP downloads.
 user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36
@@ -116,7 +119,7 @@ bt-load-saved-metadata=true
 #bt-max-open-files=100
 
 # Comma separated list of additional BitTorrent tracker's announce URI.
-bt-tracker=udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.leechers-paradise.org:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://tracker.internetwarriors.net:1337/announce,udp://p4p.arenabg.com:1337/announce,udp://tracker.openbittorrent.com:80/announce,udp://9.rarbg.to:2710/announce,udp://9.rarbg.me:2710/announce,udp://exodus.desync.com:6969/announce,udp://tracker3.itzmx.com:6961/announce,udp://tracker.torrent.eu.org:451/announce,udp://tracker.tiny-vps.com:6969/announce,udp://open.demonii.si:1337/announce,udp://tracker.moeking.me:6969/announce,udp://tracker.cyberia.is:6969/announce,udp://retracker.lanta-net.ru:2710/announce,udp://open.stealth.si:80/announce,udp://denis.stalker.upeer.me:6969/announce,udp://ipv4.tracker.harry.lu:80/announce,udp://valakas.rollo.dnsabr.com:2710/announce,udp://62.138.0.158:6969/announce,udp://188.241.58.209:6969/announce,udp://93.158.213.92:1337/announce,udp://80.209.252.132:1337/announce,udp://62.210.97.59:1337/announce,udp://165.231.0.116:80/announce,udp://151.80.120.113:2710/announce,udp://151.80.120.115:2710/announce,udp://208.83.20.20:6969/announce,udp://176.113.71.19:6961/announce,udp://89.234.156.205:451/announce,udp://5.206.3.65:6969/announce,udp://78.142.18.55:1337/announce,udp://35.156.19.129:6969/announce,udp://159.100.245.181:6969/announce,udp://37.235.174.46:2710/announce,udp://185.181.60.67:80/announce,udp://78.142.18.61:6969/announce,udp://51.15.40.114:80/announce,udp://46.148.18.250:2710/announce,udp://open.stealth.si:80/announce,udp://tracker.opentrackr.org:1337/announce,udp://tracker.coppersurfer.tk:6969/announce,udp://exodus.desync.com:6969/announce,
+bt-tracker=udp://tracker.coppersurfer.tk:6969/announce,udp://tracker.leechers-paradise.org:6969/announce,udp://tracker.opentrackr.org:1337/announce,udp://p4p.arenabg.com:1337/announce,udp://9.rarbg.to:2710/announce,udp://9.rarbg.me:2710/announce,udp://tracker.internetwarriors.net:1337/announce,udp://exodus.desync.com:6969/announce,udp://tracker.tiny-vps.com:6969/announce,udp://tracker.sbsub.com:2710/announce,udp://retracker.lanta-net.ru:2710/announce,udp://open.stealth.si:80/announce,udp://open.demonii.si:1337/announce,udp://tracker.torrent.eu.org:451/announce,udp://tracker.moeking.me:6969/announce,udp://tracker.cyberia.is:6969/announce,udp://denis.stalker.upeer.me:6969/announce,udp://ipv4.tracker.harry.lu:80/announce,udp://zephir.monocul.us:6969/announce,udp://xxxtor.com:2710/announce,udp://62.138.0.158:6969/announce,udp://93.158.213.92:1337/announce,udp://62.210.97.59:1337/announce,udp://151.80.120.115:2710/announce,udp://80.209.252.132:1337/announce,udp://208.83.20.20:6969/announce,udp://5.206.3.65:6969/announce,udp://37.235.174.46:2710/announce,udp://185.181.60.67:80/announce,udp://142.44.243.4:1337/announce,udp://89.234.156.205:451/announce,udp://92.223.105.178:6969/announce,udp://194.182.165.153:6969/announce,udp://54.37.235.149:6969/announce,udp://51.15.40.114:80/announce,udp://212.47.227.58:6969/announce,udp://95.211.168.204:2710/announce,udp://open.stealth.si:80/announce,udp://tracker.opentrackr.org:1337/announce,udp://tracker.coppersurfer.tk:6969/announce,udp://exodus.desync.com:6969/announce,
 
 # Set the connect timeout in seconds to establish connection to tracker.
 bt-tracker-connect-timeout=30
